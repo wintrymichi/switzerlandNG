@@ -1,13 +1,13 @@
 # Switzerland Builder: which open sources answer for each canton (beamng/builder/tools/probe_sources.py): the cadastral
 # survey WFS, the Register of Buildings, swisstopo STAC. The cloud session cannot reach them nor dispatch a workflow off
-# the default branch: a change of beamng/builder/test/probe_stamp.txt on a push of switzerland-builder starts it, and
+# the default branch: a change of beamng/builder/test/probe_stamp.txt on a push of main starts it, and
 # it commits app/data/sources_probe.json to the branch (a push with the workflow's token starts no other workflow).
 name: builder sources probe
 
 on:
   workflow_dispatch:
   push:
-    branches: [switzerland-builder]
+    branches: [main]
     paths: [beamng/builder/test/probe_stamp.txt]
 
 permissions:
@@ -31,6 +31,6 @@ jobs:
           git add beamng/builder/app/data/sources_probe.json
           git commit -q -m "builder: open sources per canton (probe run ${{ github.run_id }})" || exit 0
           for i in 1 2 3 4; do
-            git pull -q --rebase origin switzerland-builder && git push -q origin HEAD:switzerland-builder && break
+            git pull -q --rebase origin main && git push -q origin HEAD:main && break
             sleep $((i * 5))
           done

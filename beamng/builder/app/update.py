@@ -1,4 +1,4 @@
-"""Updates of switzerlandNG: always to the newest commit of the switzerland-builder branch on GitHub.
+"""Updates of switzerlandNG: always to the newest commit of the main branch of wintrymichi/switzerlandNG on GitHub.
 
     python -m app.update            update now (the launchers: "Update switzerlandNG.bat", update-switzerlandng.sh)
     python -m app.update --check    only say whether a newer version is out
@@ -29,8 +29,8 @@ import urllib.request
 
 from . import REPO, VERSION
 
-OWNER_REPO = "wintrymichi/magliasinaNG"
-REF = os.environ.get("SWISSNG_REF", "switzerland-builder")
+OWNER_REPO = "wintrymichi/switzerlandNG"
+REF = os.environ.get("SWISSNG_REF", "main")
 STATE = os.path.join(REPO, ".switzerlandng.json")
 FILES = os.path.join(REPO, ".switzerlandng-files.txt")
 API = "https://api.github.com/repos/" + OWNER_REPO
@@ -247,7 +247,7 @@ def _full(new, say):
             for m in t:
                 if not m.isfile():
                     continue
-                parts = m.name.split("/", 1)          # magliasinaNG-<sha>/...
+                parts = m.name.split("/", 1)          # switzerlandNG-<sha>/...
                 if len(parts) < 2:
                     continue
                 rel = _safe(parts[1])

@@ -1,5 +1,5 @@
 """Switzerland Builder: a local web app that builds a BeamNG.drive level of any part of Switzerland with the
-magliasinaNG pipeline (beamng/pipeline), from open data only. See the README of the switzerland-builder branch."""
+magliasinaNG pipeline (beamng/pipeline), from open data only. See the README of wintrymichi/switzerlandNG."""
 import os
 
 HERE = os.path.dirname(os.path.abspath(__file__))

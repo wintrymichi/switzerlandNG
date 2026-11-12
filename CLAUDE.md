@@ -2115,6 +2115,13 @@ Found in the v3.1 game test (2026-10-24, report beamng/verifica/v3.1/ingame_test
 
 ## Switzerland Builder (branch switzerland-builder, beamng/builder, 2026-11-07)
 
+- 2026-11-12 the branch moved to its own repo wintrymichi/switzerlandNG (main, full history). The first push copied the
+  code only: the installers, app/update.py, the README download links and the workflows' branch triggers still named
+  magliasinaNG/switzerland-builder, and michi's download gave the old version. When code moves to another repo or
+  branch, grep for the old owner/repo AND branch name (update.py, launch/install.*, README, workflows) in the same push.
+  Installs made before the move still poll magliasinaNG/switzerland-builder: they reach the new repo only if that
+  branch gets one last commit with the new OWNER_REPO.
+
 michi: a localhost app that builds any part of Switzerland from open data, click and run, detail at least the
 Malcantone's, tunnels and galleries done well. The app (beamng/builder) writes a zone file with "builder": true and runs
 the pipeline's own zone build (downloads, stages, finishing steps), then recenter.py, the zip and the mods folder.

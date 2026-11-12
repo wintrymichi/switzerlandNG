@@ -1,15 +1,15 @@
 #!/usr/bin/env bash
-# switzerlandNG installer for Linux and macOS: always installs the NEWEST version of the switzerland-builder branch.
+# switzerlandNG installer for Linux and macOS: always installs the NEWEST version of wintrymichi/switzerlandNG (main).
 #
-#   curl -fsSL https://raw.githubusercontent.com/wintrymichi/magliasinaNG/switzerland-builder/beamng/builder/launch/install.sh | bash
+#   curl -fsSL https://raw.githubusercontent.com/wintrymichi/switzerlandNG/main/beamng/builder/launch/install.sh | bash
 #   bash install.sh [folder] [--no-start]          default folder: ~/switzerlandNG
 #
 # It asks GitHub for the newest commit, downloads that commit's archive (about 330 MB) and unpacks it into the folder,
 # then starts the app (the first start sets up its Python, 5-10 minutes). A folder that already holds switzerlandNG
 # is updated instead (only the changed files, update-switzerlandng.sh). Builds and settings are never touched.
 set -euo pipefail
-REPO="wintrymichi/magliasinaNG"
-REF="${SWISSNG_REF:-switzerland-builder}"
+REPO="wintrymichi/switzerlandNG"
+REF="${SWISSNG_REF:-main}"
 DEST="$HOME/switzerlandNG"
 START=1
 for a in "$@"; do

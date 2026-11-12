@@ -1,7 +1,7 @@
 # Switzerland Builder: a whole build of a test area through the launcher (start-switzerland-builder.sh cli), as a user's
 # PC runs it: micromamba and the Python environment, the downloads and the stages (first job), then the finishing steps,
 # the recentring and the zip (second job: GitHub stops a job after 6 h). The area is beamng/builder/test/area.json.
-# A change of beamng/builder/test/stamp.txt on a push of switzerland-builder starts it (the cloud session cannot
+# A change of beamng/builder/test/stamp.txt on a push of main starts it (the cloud session cannot
 # dispatch a workflow off the default branch). The zip and the logs go to the DRAFT release "builder-test" (not public).
 #
 # "[builder finish <run id>]" in the commit message: only the second job, on the first job's build of that run (its
@@ -14,7 +14,7 @@ name: builder test build
 on:
   workflow_dispatch:
   push:
-    branches: [switzerland-builder]
+    branches: [main]
     paths: [beamng/builder/test/stamp.txt]
 
 concurrency:
@@ -53,7 +53,7 @@ jobs:
           echo "finishing steps only, on the build of run: ${F:-no}"
           gh release view builder-test >/dev/null 2>&1 || \
             gh release create builder-test --draft --target "$GITHUB_SHA" --title "Switzerland Builder test (draft, not a release)" \
-              --notes "Test builds of the Switzerland Builder (branch switzerland-builder). Not a release."
+              --notes "Test builds of the Switzerland Builder (wintrymichi/switzerlandNG). Not a release."
 
   stages:
     needs: setup

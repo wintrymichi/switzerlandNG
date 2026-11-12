@@ -1,6 +1,6 @@
-# switzerlandNG installer for Windows: always installs the NEWEST version of the switzerland-builder branch.
+# switzerlandNG installer for Windows: always installs the NEWEST version of wintrymichi/switzerlandNG (main).
 #
-#   powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/wintrymichi/magliasinaNG/switzerland-builder/beamng/builder/launch/install.ps1 | iex"
+#   powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/wintrymichi/switzerlandNG/main/beamng/builder/launch/install.ps1 | iex"
 #   powershell -ExecutionPolicy Bypass -File install.ps1 [folder] [--no-start]     default folder: %USERPROFILE%\switzerlandNG
 #
 # It asks GitHub for the newest commit, downloads that commit's archive (about 330 MB) and unpacks it into the folder,
@@ -11,9 +11,9 @@ $InstArgs = @($args)
 $ErrorActionPreference = 'Stop'
 $ProgressPreference = 'SilentlyContinue'
 try { [Net.ServicePointManager]::SecurityProtocol = [Net.ServicePointManager]::SecurityProtocol -bor [Net.SecurityProtocolType]::Tls12 } catch { }
-$RepoName = 'wintrymichi/magliasinaNG'
+$RepoName = 'wintrymichi/switzerlandNG'
 $RefName = $env:SWISSNG_REF
-if (-not $RefName) { $RefName = 'switzerland-builder' }
+if (-not $RefName) { $RefName = 'main' }
 $Dest = Join-Path $env:USERPROFILE 'switzerlandNG'
 $StartAfter = $true
 foreach ($a in $InstArgs) { if ($a -eq '--no-start') { $StartAfter = $false } else { $Dest = $a } }

@@ -1,5 +1,5 @@
 # switzerlandNG: the installer and the updater, as a user's PC runs them (Windows PowerShell 5.1 and Linux bash).
-# Started by a change of beamng/builder/test/update_stamp.txt on a push of switzerland-builder.
+# Started by a change of beamng/builder/test/update_stamp.txt on a push of main.
 #   1. the one-line installer (launch/install.*) into A: the newest commit of the branch
 #   2. A is made to look like an install of an older commit (OLD, 3 commits back of the files the app uses)
 #   3. "Update switzerlandNG" in A (sets up the app's Python first, then only the changed files)
@@ -8,7 +8,7 @@
 name: builder_update_test
 on:
   push:
-    branches: [switzerland-builder]
+    branches: [main]
     paths: [beamng/builder/test/update_stamp.txt]
 permissions:
   contents: read

@@ -10,7 +10,7 @@
 ![Data](https://img.shields.io/badge/data-swisstopo%20%C2%B7%20cadastral%20surveys%20%C2%B7%20OSM-lightgrey)
 [![License](https://img.shields.io/badge/license-CC%20BY--NC%204.0-lightgrey)](LICENSE)
 
-**[Download the Switzerland Builder](https://github.com/wintrymichi/magliasinaNG/archive/refs/heads/switzerland-builder.zip)** · [The Malcantone map (main branch)](https://github.com/wintrymichi/magliasinaNG/tree/main) · [wintrymichi.ch](https://wintrymichi.ch)
+**[Download the Switzerland Builder](https://github.com/wintrymichi/switzerlandNG/archive/refs/heads/main.zip)** · [The Malcantone map (main branch)](https://github.com/wintrymichi/magliasinaNG/tree/main) · [wintrymichi.ch](https://wintrymichi.ch)
 
 </div>
 
@@ -18,7 +18,7 @@ The Switzerland Builder (the app is called **switzerlandNG**, by wintrymichi) is
 
 There is nothing to install or set up first: no Python, no GIS software, no accounts, no API keys. On its first start the app makes its own Python next to itself. Nothing in a level is modelled by hand and nothing comes from a commercial map: terrain, roads, buildings, woods, water, railways and tunnels are all made from the open data of the Swiss Confederation, the cantons and OpenStreetMap.
 
-This branch (`switzerland-builder`) is the builder. The Malcantone mod itself, its releases and its own README are on the [main branch](https://github.com/wintrymichi/magliasinaNG/tree/main).
+This repository is the builder (it came out of the `switzerland-builder` branch of magliasinaNG). The Malcantone mod itself, its releases and its own README are in [magliasinaNG](https://github.com/wintrymichi/magliasinaNG).
 
 **Contents:** [Quick start](#quick-start) · [Using the app](#using-the-app) · [What you need](#what-you-need) · [What a level contains](#what-a-level-contains) · [Detail compared with the Malcantone](#detail-compared-with-the-malcantone) · [Cantons and their data](#cantons-and-their-data) · [Build times and sizes](#build-times-and-sizes) · [Command line](#command-line) · [Files and folders](#files-and-folders) · [Troubleshooting](#troubleshooting) · [Known limitations](#known-limitations) · [For developers](#for-developers) · [Sources and licences](#sources-and-licences) · [Licence](#licence)
 
@@ -28,10 +28,10 @@ This branch (`switzerland-builder`) is the builder. The Malcantone mod itself, i
 
    | System | Paste into |
    |---|---|
-   | Windows 10 / 11 | *Run* (Win+R) or a command prompt: `powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/wintrymichi/magliasinaNG/switzerland-builder/beamng/builder/launch/install.ps1 \| iex"` |
-   | macOS, Linux | a terminal: `curl -fsSL https://raw.githubusercontent.com/wintrymichi/magliasinaNG/switzerland-builder/beamng/builder/launch/install.sh \| bash` |
+   | Windows 10 / 11 | *Run* (Win+R) or a command prompt: `powershell -ExecutionPolicy Bypass -c "irm https://raw.githubusercontent.com/wintrymichi/switzerlandNG/main/beamng/builder/launch/install.ps1 \| iex"` |
+   | macOS, Linux | a terminal: `curl -fsSL https://raw.githubusercontent.com/wintrymichi/switzerlandNG/main/beamng/builder/launch/install.sh \| bash` |
 
-   Or **download** [switzerland-builder.zip](https://github.com/wintrymichi/magliasinaNG/archive/refs/heads/switzerland-builder.zip) and unpack it anywhere, for example on the disk with the most free space. It is about 330 MB because the branch carries the whole repository (the photos and checks of the Malcantone map); the app uses about 55 MB of it.
+   Or **download** [switzerlandNG-main.zip](https://github.com/wintrymichi/switzerlandNG/archive/refs/heads/main.zip) and unpack it anywhere, for example on the disk with the most free space. It is about 330 MB because the repository carries the whole history of magliasinaNG (the photos and checks of the Malcantone map); the app uses about 55 MB of it.
 2. **Start it** with a double click:
 
    | System | Double-click |
