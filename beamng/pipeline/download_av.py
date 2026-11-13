@@ -4,6 +4,12 @@ from the geodienste.ch WFS (open data, attribution required):
   SOSF / SOLI / SOPT  oggetti singoli as surfaces / lines / points (walls, stairs, bridges ...)
 over the playable area (area.py) + MARGIN, in TILE m requests paged by COUNT features.
 Saved as GeoJSON (LV95) in data/av/.
+
+geodienste.ch's terms (geodienste.ch/terms-of-use) forbid bots with high request rates and say access can be refused
+for excessive use: an IP that sends many GetFeature requests in a row gets HTTP 403 for a while (michi 2026-11-13, a
+user's log: 403 on an open canton, Aargau, that answered normally from another IP). So the requests go one at a time
+with PAUSE s between them, and a 403 is not retried: the level is built without the survey (as in a canton with no
+open survey: land cover from swissTLM3D + ESA WorldCover) and BLOCKED is written, so the next build tries again.
 """
 import json, os, time
 import numpy as np
@@ -17,6 +23,8 @@ LAYERS = ["LCSF", "SOSF", "SOLI", "SOPT"]
 TILE = 1024.0
 MARGIN = 100.0
 COUNT = 5000
+PAUSE = 1.0           # s between two requests (fair use)
+BLOCKED = "BLOCKED.txt"
 
 
 def fetch(layer, bbox, start=0):
@@ -24,6 +32,7 @@ def fetch(layer, bbox, start=0):
                   OUTPUTFORMAT="application/json; subtype=geojson", SRSNAME="EPSG:2056",
                   BBOX=",".join(f"{v:.1f}" for v in bbox) + ",urn:ogc:def:crs:EPSG::2056",
                   COUNT=str(COUNT), STARTINDEX=str(start))
+    time.sleep(PAUSE)
     r = netio.get(WFS, params=params, timeout=300, what=f"survey {layer} page {start // COUNT + 1}")
     return r.json()["features"], len(r.content)
 
@@ -31,6 +40,31 @@ def fetch(layer, bbox, start=0):
 def main():
     out_dir = os.path.join(DATA, "av")
     os.makedirs(out_dir, exist_ok=True)
+    blocked = os.path.join(out_dir, BLOCKED)
+    if os.path.exists(blocked):         # the last build was refused: the empty layers it left are no survey, try again
+        for l in LAYERS:
+            if os.path.exists(os.path.join(out_dir, f"{l}.geojson")):
+                os.remove(os.path.join(out_dir, f"{l}.geojson"))
+        os.remove(blocked)
+    try:
+        download(out_dir)
+    except netio.DownloadError as e:
+        if e.status != 403:
+            raise
+        print("\nWARNING: geodienste.ch refused the cadastral survey (HTTP 403). It does that for a while to an address "
+              "that sent it many requests (fair use, geodienste.ch/terms-of-use), or to some VPN and server networks. "
+              "The level is built WITHOUT the survey (land cover from swissTLM3D and ESA WorldCover, fewer road "
+              "details), as in a canton with no open survey. The next build tries again; wait a few hours, or turn a "
+              "VPN off.\n", flush=True)
+        for l in LAYERS:
+            dest = os.path.join(out_dir, f"{l}.geojson")
+            if not os.path.exists(dest):
+                json.dump({"type": "FeatureCollection", "features": []}, open(dest, "w"))
+        with open(blocked, "w") as f:
+            f.write("geodienste.ch HTTP 403 %s: %s\n" % (time.strftime("%Y-%m-%d %H:%M"), str(e)[:300]))
+
+
+def download(out_dir):
     g = area.lv95_polygon(MARGIN)
     shapely.prepare(g)
     e0, n0, e1, n1 = g.bounds

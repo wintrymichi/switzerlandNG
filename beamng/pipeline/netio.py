@@ -36,7 +36,9 @@ PERMANENT = {400, 401, 404, 405, 410, 411, 413, 414, 416, 422}
 
 
 class DownloadError(RuntimeError):
-    pass
+    def __init__(self, msg, status=None):
+        super().__init__(msg)
+        self.status = status            # the HTTP status of the last answer, when there was one (403: a ban)
 
 
 class Stalled(IOError):
@@ -325,7 +327,7 @@ def get(url, params=None, data=None, method=None, timeout=None, attempts=ATTEMPT
         finally:
             if tr is not None:
                 _unregister(tr)
-    raise DownloadError("%s failed after %d attempts: %s" % (what, attempts, str(last)[:300]))
+    raise DownloadError("%s failed after %d attempts: %s" % (what, attempts, str(last)[:300]), status=r_status(last))
 
 
 def r_status(e):
