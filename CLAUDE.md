@@ -2251,6 +2251,16 @@ the pipeline's own zone build (downloads, stages, finishing steps), then recente
   raster was 'none' everywhere, which the pipeline reads as "not Switzerland": no measured trees, no lake, no rivers, no
   OSM furniture. landcover.tlm_cover lays swissTLM3D TLM_BODENBEDECKUNG where the survey has nothing and ESA WorldCover
   on the rest of the Swiss land (WorldCover's water, code 80, as meadow on purpose: swissTLM3D decides the water).
+- HTTP 403 from geodienste.ch on an OPEN canton (a user's log, 2026-11-13: av_0/ita LCSF, a 1 km box in Aargau) is
+  not a closed survey: the same URL answered 200 with features from michi's PC. geodienste.ch/terms-of-use: bots with
+  high request rates are not allowed and access "can be restricted or refused" for excessive use; offline use should
+  take the STAC / export API instead. The builder sent up to 4 layers x every 1 km box back to back, retried a 403
+  once and the job runner reran the failed download step: the ban got longer. download_av now waits PAUSE (1 s)
+  between requests and on a 403 builds without the survey (empty layers + data/av/BLOCKED.txt, retried next build).
+  netio.DownloadError carries the HTTP status. The error in a netio DownloadError is cut at 300 characters (the user's
+  line was exactly 300, COUNT and STARTINDEX cut off): do not read the request's parameters from it. Not done: the STAC
+  fallback (geodienste.ch/stac, collection av: one INTERLIS .itf per municipality, a GeoPackage per canton, AG
+  351 MB zip), which needs a DM01 reader with the German/French attribute names.
 - The 2026-02 swissTLM3D package splits big layers in two (TLM_BB\swissTLM3D_TLM_BODENBEDECKUNG_OST/_WEST.shp, also
   EINZELBAUM and GEBAEUDE_FOOTPRINT): download_tlm looked for one file, logged "not in the package", and the Vitznau
   and Montreux builds had no swissTLM3D land cover and no lake (water.lake_level measures the specchio_acqua cells). It
